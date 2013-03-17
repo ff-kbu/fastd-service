@@ -1,0 +1,4 @@
+register_url: http://USER:PWD@register.kbu.freifunk.net/
+crash_dump_path: /var/log/ath9k-crash
+fastd_peer_dir: /usr/local/etc/fastd/peers
+fastd_reload_cmd: sudo ./fastd_hup
