@@ -1,5 +1,5 @@
 require 'rubygems'
 require 'sinatra'
-require './upload.rb'
+require './fastd_service.rb'
 
 run Sinatra::Application

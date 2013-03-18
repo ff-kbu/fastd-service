@@ -5,7 +5,7 @@ require 'netaddr'
 require "csv"
 require "json"
 require './lib_node.rb'
-require './fastd_service.rb'
+require './lib_service.rb'
 require 'uri'
 require 'net/http'
 
@@ -19,6 +19,7 @@ end
 get '/ath9k-crash' do
   if params[:_method] = 'post'
 	@@service.process_ath9_crash(params)
+  end
 end
 
 get '/upload_key' do

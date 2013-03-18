@@ -1,6 +1,7 @@
+require 'yaml'
 class LibService
   
-  @@conf =  @@collectd_conf ||= YAML::load_file("#{Rails.root}/config/conf.yml")
+  @@conf =  @@collectd_conf ||= YAML::load_file("./conf.yml")
   
   
   # Service (singleton) used by sinatra
@@ -32,8 +33,8 @@ class LibService
     #Service calls can be error-prone, check everything
     raise "No key given" if key.nil?
     raise "No nodeid given" if nodeid.nil?
-    raise "Invalid node-ID #{nodeid}" unless nodeid.match /^[0-9a-f]{12}$/i
-    raise "Invalid key #{key}" uness key.match /^[0-9a-f]+$/i
+    raise "Invalid node-ID #{nodeid}" unless nodeid.match(/^[0-9a-f]{12}$/i)
+    raise "Invalid key #{key}" unless key.match(/^[0-9a-f]+$/i)
     
     #Submit key
     resp = nil
