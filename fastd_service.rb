@@ -26,8 +26,8 @@ get '/upload_key' do
   if(params[:_method] == 'post')
     begin
       @@service.process_key_upload(params)
-      status 201 #Created
-      '<h1>201 Created</h1>'
+      status 200 #Created
+      '<h1>200 Created</h1>'
     rescue Exception => e
       status 422 #Unprocessable Entity
       "<h1>422 Unprocessable Entity</h1><br />#{e}\n"
