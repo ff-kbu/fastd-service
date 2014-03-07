@@ -15,11 +15,11 @@ set :method_override, true
 register Sinatra::MultiRoute
 
 
-post '/ath9k-crash/', '/fastd-upload/ath9-crash' do
+route :post,  ['/ath9k-crash/', '/fastd-upload/ath9-crash'] do
 	@@service.process_ath9_crash(params)
 end
 
-post '/', '/fastd-upload/' do
+route  :get,['/upload_key'], :post, ['/', '/fastd-upload/','/upload_key'] do
   begin
       @@service.process_key_upload(params)
       status 201 #Created
@@ -31,7 +31,7 @@ post '/', '/fastd-upload/' do
   
 end
 
-get '/graph.png', '/fastd-upload/graph.png' do
+route :get, ['/graph.png', '/fastd-upload/graph.png'] do
 #  content_type 'image/png'
   @@service.render_graph()
   
