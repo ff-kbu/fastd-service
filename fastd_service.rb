@@ -8,35 +8,18 @@ require './lib_node.rb'
 require './lib_service.rb'
 require 'uri'
 require 'net/http'
+require "sinatra/multi_route"
 
 @@service = LibService.new
+set :method_override, true 
+register Sinatra::MultiRoute
 
 
-post '/ath9k-crash/' do
+post '/ath9k-crash/', '/fastd-upload/ath9-crash' do
 	@@service.process_ath9_crash(params)
 end
 
-get '/ath9k-crash' do
-  if params[:_method] = 'post'
-	@@service.process_ath9_crash(params)
-  end
-end
-
-get '/upload_key' do
-  if(params[:_method] == 'post')
-    begin
-      @@service.process_key_upload(params)
-      status 200 #Created
-      '<h1>200 Created</h1>'
-    rescue Exception => e
-      status 422 #Unprocessable Entity
-      "<h1>422 Unprocessable Entity</h1><br />#{e}\n"
-    end
-  end
-end 
-
-
-post '/' do
+post '/', '/fastd-upload/' do
   begin
       @@service.process_key_upload(params)
       status 201 #Created
@@ -48,7 +31,7 @@ post '/' do
   
 end
 
-get '/graph.png' do
+get '/graph.png', '/fastd-upload/graph.png' do
 #  content_type 'image/png'
   @@service.render_graph()
   
