@@ -9,6 +9,8 @@ require './lib_service.rb'
 require 'uri'
 require 'net/http'
 require "sinatra/multi_route"
+require 'sinatra/base'
+
 
 @@service = LibService.new
 set :method_override, true 
