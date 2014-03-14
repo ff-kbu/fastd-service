@@ -19,7 +19,7 @@ route :post,  ['/ath9k-crash/', '/fastd-upload/ath9-crash'] do
 	@@service.process_ath9_crash(params)
 end
 
-route  :get,['/upload_key'], :post, ['/', '/fastd-upload/','/upload_key'] do
+route  :get,['/upload_key'], :post, ['/', '/fastd-upload/upload_key','/upload_key'] do
   begin
       @@service.process_key_upload(params)
       status 201 #Created
