@@ -13,36 +13,35 @@ require 'sinatra/base'
 
 
 @@service = LibService.new
-set :method_override, true 
-register Sinatra::MultiRoute
+class FastdService < Sinatra::Base
+  set :method_override, true 
+  register Sinatra::MultiRoute
 
 
-route :post,  ['/ath9k-crash/', '/fastd-upload/ath9-crash'] do
+  route :post,  ['/ath9k-crash/', '/fastd-upload/ath9-crash'] do
 	@@service.process_ath9_crash(params)
-end
+  end
 
-route  :get,['/upload_key'], :post, ['/', '/fastd-upload/upload_key','/upload_key'] do
-  begin
+  route  :get,['/upload_key'], :post, ['/', '/fastd-upload/upload_key','/upload_key'] do
+    begin
       @@service.process_key_upload(params)
       status 200 #Created
       '<h1>200 Created</h1>'
     rescue Exception => e
       status 422 #Unprocessable Entity
       "<h1>422 Unprocessable Entity</h1><br />#{e}\n"
+    end
   end
-  
-end
 
-route :get, ['/graph.png', '/fastd-upload/graph.png'] do
-#  content_type 'image/png'
-  @@service.render_graph()
+  route :get, ['/graph.png', '/fastd-upload/graph.png'] do
+    @@service.render_graph()
   
-  result = ""
-  system "/usr/local/bin/batctl_vd_suid | fdp -T png > /tmp/graph.png"
-  send_file '/tmp/graph.png'
-end
+    result = ""
+    system "/usr/local/bin/batctl_vd_suid | fdp -T png > /tmp/graph.png"
+    send_file '/tmp/graph.png'
+  end
 
-get '/' do
+  get '/' do
 <<EOD
 <h1>Upload fastd-key</h1>
 
@@ -58,5 +57,5 @@ get '/' do
    
 </form>
 EOD
+  end
 end
-
