@@ -1,5 +1,5 @@
-require 'rubygems'
-require 'sinatra'
+#require 'rubygems'
+#require 'sinatra'
 require './fastd_service.rb'
 
-run Sinatra::Application
+run FastdService
