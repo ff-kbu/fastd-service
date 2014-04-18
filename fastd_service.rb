@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'sinatra'
+require 'sinatra/base'
 require 'fileutils'
 require 'netaddr'
 require "csv"
