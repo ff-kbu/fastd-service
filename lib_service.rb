@@ -46,7 +46,7 @@ class LibService
     
     # In principle, it might should be possible for register to reject certain key (eg in times of attacks / faults)
     # if so, the respone will be HTTP-Net::HTTPServiceUnavailable
-    if resp.code == 423 #HTTP-Locked
+    if resp.present? && resp.code == 423 #HTTP-Locked
       raise "Denied by policy"
     end
     # Ignore other errors - Register-Problems should not harm fastd-Services
