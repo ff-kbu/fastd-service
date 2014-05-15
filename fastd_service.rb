@@ -28,7 +28,7 @@ class FastdService < Sinatra::Base
       status 200 #Created
       '<h1>200 Created</h1>'
     rescue Exception => e
-      logger.error "Error while uploading key: #{e}"
+      logger.error "Error while uploading key: #{$!} -- #{e.backtrace.join("\n\t")}"
       status 422 #Unprocessable Entity
       "<h1>422 Unprocessable Entity</h1><br />#{e}\n"
     end
