@@ -26,7 +26,7 @@ class FastdService < Sinatra::Base
 
   route  :get,['/upload_key'], :post, ['/', '/fastd-upload/upload_key','/upload_key'] do
     begin
-      @@service.process_key_upload(params)
+      @@service.process_key_upload(params,logger)
       status 200 #Created
       '<h1>200 Created</h1>'
     rescue Exception => e
