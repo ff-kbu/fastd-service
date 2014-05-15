@@ -21,7 +21,7 @@ class LibService
       		{ "node_id" => nodeid, "dmesg" => dmesg, "tstmp" => params[:tstmp], 'submission_stmp' => now }
   end
   
-  def process_key_upload(params)
+  def process_key_upload(params,logger)
     fastd_dir = @@conf['fastd_peer_dir']
     reload_cmd = @@conf['fastd_reload_cmd']
     url = @@conf['register_url']
@@ -41,6 +41,7 @@ class LibService
     begin
       resp = Net::HTTP.post_form URI("#{url}/fastds"), { "mac" => nodeid, "key" => key, "fw_version" => fw_version }
     rescue Exception => e
+      logger.warn "Unable to query register - #{$!} -- #{e.backtrace.join("\n\t")}"
       # Register is inavailble, ignore
     end
     
