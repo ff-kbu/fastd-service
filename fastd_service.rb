@@ -16,7 +16,9 @@ require 'sinatra/base'
 class FastdService < Sinatra::Base
   set :method_override, true 
   register Sinatra::MultiRoute
-
+  configure :production, :development do
+    enable :logging
+  end
 
   route :post,  ['/ath9k-crash/', '/fastd-upload/ath9-crash'] do
 	@@service.process_ath9_crash(params)
