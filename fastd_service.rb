@@ -10,7 +10,7 @@ require 'uri'
 require 'net/http'
 require "sinatra/multi_route"
 require 'sinatra/base'
-
+require "logger"
 
 @@service = LibService.new
 class FastdService < Sinatra::Base
