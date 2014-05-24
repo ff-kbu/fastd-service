@@ -18,6 +18,7 @@ class FastdService < Sinatra::Base
   register Sinatra::MultiRoute
   configure :production, :development do
     enable :logging
+    set :logging, Logger::WARN
   end
 
   route :post,  ['/ath9k-crash/', '/fastd-upload/ath9-crash'] do
