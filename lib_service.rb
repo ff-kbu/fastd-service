@@ -30,14 +30,15 @@ class LibService
     key = params[:key]
     fw_version = params[:fw_version]
     
-    file_name = "#{fastd_dir}/#{nodeid}_#{key}"
-    return if File.exists?(file_name)
-
     #Service calls can be error-prone, check everything
     raise "No key given" if key.nil?
     raise "No nodeid given" if nodeid.nil?
     raise "Invalid node-ID #{nodeid}" unless nodeid.match(/^[0-9a-f]{12}$/i)
     raise "Invalid key #{key}" unless key.match(/^[0-9a-f]+$/i)
+
+    file_name = "#{fastd_dir}/#{nodeid}_#{key}"
+    return if File.exists?(file_name)
+
     
     #Submit key
     resp = nil
@@ -50,7 +51,7 @@ class LibService
     
     # In principle, it might should be possible for register to reject certain key (eg in times of attacks / faults)
     # if so, the respone will be HTTP-Net::HTTPServiceUnavailable
-    if 1resp.nil? && resp.code == 423 #HTTP-Locked
+    if resp && resp.code == 423 #HTTP-Locked
       raise "Denied by policy"
     end
     # Ignore other errors - Register-Problems should not harm fastd-Services
