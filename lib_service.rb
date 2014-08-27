@@ -37,9 +37,7 @@ class LibService
     raise "Invalid key #{key}" unless key.match(/^[0-9a-f]+$/i)
 
     file_name = "#{fastd_dir}/#{nodeid}_#{key}"
-    return if File.exists?(file_name)
 
-    
     #Submit key
     resp = nil
     begin
@@ -48,6 +46,8 @@ class LibService
       logger.warn "Unable to query register - #{$!} -- #{e.backtrace.join("\n\t")}"
       # Register is inavailble, ignore
     end
+    
+    return if File.exists?(file_name)
     
     # In principle, it might should be possible for register to reject certain key (eg in times of attacks / faults)
     # if so, the respone will be HTTP-Net::HTTPServiceUnavailable
